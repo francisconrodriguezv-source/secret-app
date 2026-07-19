@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Widget "Notes" — muestra la ÚLTIMA nota escrita como post-it grande.
+    Fondo de color (yellow por defecto, sobreescrito en runtime), texto
+    centrado, firma abajo a la derecha. Si no hay notas: empty state.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/widget_notes_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="4dp">
+
+    <!-- Post-it card (contenedor con background por color de la nota) -->
+    <LinearLayout
+        android:id="@+id/widget_notes_card"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/widget_note_bg_yellow"
+        android:orientation="vertical"
+        android:padding="14dp">
+
+        <!-- Texto principal (centrado, ocupa la mayor parte) -->
+        <TextView
+            android:id="@+id/widget_notes_text"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text=""
+            android:textColor="#3D0602"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:maxLines="5"
+            android:ellipsize="end"
+            android:lineSpacingExtra="2dp"
+            tools:text="Love you to the moon and back!" />
+
+        <!-- Firma (autor + timestamp) abajo a la derecha -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end|center_vertical">
+
+            <TextView
+                android:id="@+id/widget_notes_timestamp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:textColor="#773125"
+                android:textSize="10sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                tools:text="2 min ago" />
+
+            <TextView
+                android:id="@+id/widget_notes_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text=""
+                android:textColor="#94483A"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:text="— Emma" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Empty state (visible sólo si no hay notas) -->
+    <LinearLayout
+        android:id="@+id/widget_notes_empty_wrap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/widget_bg_notes"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="16dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/widget_ic_note"
+            android:contentDescription="Notes"
+            android:alpha="0.6" />
+
+        <TextView
+            android:id="@+id/widget_notes_empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text=""
+            android:textColor="#87726F"
+            android:textSize="12sp"
+            android:gravity="center" />
+    </LinearLayout>
+</FrameLayout>

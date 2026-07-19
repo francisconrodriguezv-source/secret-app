@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Widget "Upcoming" — muestra los próximos eventos del calendario.
+    Layout 4x2 con un header y hasta 2 filas de evento.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_bg_upcoming"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Header con icono + título -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/widget_ic_calendar"
+            android:contentDescription="Calendar" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="UPCOMING"
+            android:textColor="#94483A"
+            android:textSize="10sp"
+            android:letterSpacing="0.15"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Evento 1 -->
+    <LinearLayout
+        android:id="@+id/widget_up_row1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/widget_up_title1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=""
+            android:textColor="#211A18"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="Our Anniversary" />
+
+        <TextView
+            android:id="@+id/widget_up_when1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text=""
+            android:textColor="#773125"
+            android:textSize="12sp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:background="@drawable/widget_bg_together"
+            tools:text="in 12 days" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/widget_up_sub1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:text=""
+        android:textColor="#54433F"
+        android:textSize="11sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        tools:text="August 8 - Dinner at Luigi's" />
+
+    <!-- Evento 2 -->
+    <LinearLayout
+        android:id="@+id/widget_up_row2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/widget_up_title2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=""
+            android:textColor="#211A18"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+        <TextView
+            android:id="@+id/widget_up_when2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text=""
+            android:textColor="#773125"
+            android:textSize="12sp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:background="@drawable/widget_bg_together" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/widget_up_sub2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:text=""
+        android:textColor="#54433F"
+        android:textSize="11sp"
+        android:maxLines="1"
+        android:ellipsize="end" />
+
+    <!-- Empty state -->
+    <TextView
+        android:id="@+id/widget_up_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="No upcoming events yet."
+        android:textColor="#87726F"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:visibility="gone" />
+</LinearLayout>

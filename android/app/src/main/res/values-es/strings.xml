@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tandem</string>
+
+    <string name="widget_together_desc">Tandem — Tiempo juntos</string>
+    <string name="widget_upcoming_desc">Tandem — Próximos eventos</string>
+    <string name="widget_notes_desc">Tandem — Últimas notas</string>
+    <string name="widget_countdown_desc">Tandem — Cuenta regresiva</string>
+
+    <string name="widget_label_together">JUNTOS</string>
+    <string name="widget_label_upcoming">PRÓXIMOS</string>
+    <string name="widget_label_notes">NOTAS</string>
+    <string name="widget_label_countdown">CUENTA REGR.</string>
+
+    <string name="widget_year_singular">año</string>
+    <string name="widget_year_plural">años</string>
+    <string name="widget_month_singular">mes</string>
+    <string name="widget_month_plural">meses</string>
+    <string name="widget_day_singular">día</string>
+    <string name="widget_day_plural">días</string>
+    <string name="widget_days_word">días</string>
+    <string name="widget_day_word">día</string>
+    <string name="widget_week_singular">semana</string>
+    <string name="widget_week_plural">semanas</string>
+    <string name="widget_relative_today">Hoy</string>
+    <string name="widget_relative_tomorrow">Mañana</string>
+    <string name="widget_relative_past">Pasado</string>
+    <string name="widget_relative_in">en %1$s</string>
+
+    <string name="widget_empty_upcoming">Sin eventos próximos.</string>
+    <string name="widget_empty_notes">Sin notas todavía.</string>
+    <string name="widget_empty_countdown">Agrega una fecha importante</string>
+</resources>

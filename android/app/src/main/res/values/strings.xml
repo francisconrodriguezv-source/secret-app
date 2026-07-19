@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App label mostrado en el launcher -->
+    <string name="app_name">Tandem</string>
+
+    <!-- Descripciones que aparecen en el picker de widgets -->
+    <string name="widget_together_desc">Tandem — Time together</string>
+    <string name="widget_upcoming_desc">Tandem — Upcoming events</string>
+    <string name="widget_notes_desc">Tandem — Latest notes</string>
+    <string name="widget_countdown_desc">Tandem — Countdown</string>
+
+    <!-- Etiquetas visibles dentro de los widgets -->
+    <string name="widget_label_together">TOGETHER</string>
+    <string name="widget_label_upcoming">UPCOMING</string>
+    <string name="widget_label_notes">NOTES</string>
+    <string name="widget_label_countdown">COUNTDOWN</string>
+
+    <!-- Formatos y palabras usadas por los providers -->
+    <string name="widget_year_singular">yr</string>
+    <string name="widget_year_plural">yrs</string>
+    <string name="widget_month_singular">mo</string>
+    <string name="widget_month_plural">mos</string>
+    <string name="widget_day_singular">day</string>
+    <string name="widget_day_plural">days</string>
+    <string name="widget_days_word">days</string>
+    <string name="widget_day_word">day</string>
+    <string name="widget_week_singular">week</string>
+    <string name="widget_week_plural">weeks</string>
+    <string name="widget_relative_today">Today</string>
+    <string name="widget_relative_tomorrow">Tomorrow</string>
+    <string name="widget_relative_past">Past</string>
+    <string name="widget_relative_in">in %1$s</string>
+
+    <string name="widget_empty_upcoming">No upcoming events yet.</string>
+    <string name="widget_empty_notes">No notes yet.</string>
+    <string name="widget_empty_countdown">Add an important date</string>
+</resources>

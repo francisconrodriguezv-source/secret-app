@@ -1,0 +1,40 @@
+rules_version = '2';
+
+// ============================================================================
+// Tandem — Firebase Storage Security Rules
+// ============================================================================
+//
+// Layout del bucket:
+//   couples/{coupleId}/moments/{fileName}  — foto de un [Moment].
+//   couples/{coupleId}/avatars/{fileName}  — foto de perfil (individual
+//                                            o compartida). El fileName
+//                                            incluye role + timestamp
+//                                            para evitar cache stale.
+//
+// Reglas:
+//   - Cualquier usuario autenticado puede leer/subir (validamos en el
+//     cliente vía Firestore quién puede ver el moment o couple que
+//     apunta al file).
+//   - Límite de 10 MB por archivo.
+//   - Solo tipos MIME image/*.
+// ============================================================================
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    match /couples/{coupleId}/moments/{fileName} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null &&
+        request.resource.size < 10 * 1024 * 1024 &&
+        request.resource.contentType.matches('image/.*');
+    }
+
+    match /couples/{coupleId}/avatars/{fileName} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null &&
+        request.resource.size < 10 * 1024 * 1024 &&
+        request.resource.contentType.matches('image/.*');
+    }
+
+  }
+}

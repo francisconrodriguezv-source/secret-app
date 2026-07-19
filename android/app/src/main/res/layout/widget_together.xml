@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Widget "Together". Resizable de 1x1 a 1x4. El provider Kotlin oculta o
+    muestra elementos según el ancho:
+      - 1x1: sólo círculo con corazón + número gigante de días.
+      - 1x2: círculo + duración compacta ("6y 10m").
+      - 1x3: círculo + label + duración completa.
+      - 1x4: círculo + label + duración completa + nombres pareja.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/widget_together_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_bg_together"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="6dp">
+
+    <!-- Círculo peach con heart (siempre visible) -->
+    <FrameLayout
+        android:id="@+id/widget_together_heart_wrap"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/widget_heart_bg">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center"
+            android:src="@drawable/widget_ic_heart"
+            android:contentDescription="Heart" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/widget_together_text_wrap"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/widget_together_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TOGETHER"
+            android:textColor="#793326"
+            android:textSize="9sp"
+            android:letterSpacing="0.15"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/widget_together_duration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="—"
+            android:textColor="#3D0602"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="6 yrs 10 mos 27 days" />
+
+        <TextView
+            android:id="@+id/widget_together_couple"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="—"
+            android:textColor="#773125"
+            android:textSize="11sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:visibility="gone"
+            tools:text="Alex &amp; Emma" />
+    </LinearLayout>
+
+    <!-- Número gigante para tamaño 1x1 (visible solo cuando no cabe texto) -->
+    <TextView
+        android:id="@+id/widget_together_days_big"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="—"
+        android:textColor="#3D0602"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:visibility="gone"
+        tools:text="2523d" />
+</LinearLayout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Drawable de la ProgressBar horizontal del widget "Countdown".
+    Track: color muy claro semi-transparente. Progress: gradient primary.
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@android:id/background">
+        <shape>
+            <corners android:radius="4dp" />
+            <solid android:color="#3D94483A" />
+        </shape>
+    </item>
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <corners android:radius="4dp" />
+                <gradient
+                    android:angle="0"
+                    android:startColor="#94483A"
+                    android:endColor="#FF9E8C" />
+            </shape>
+        </clip>
+    </item>
+</layer-list>

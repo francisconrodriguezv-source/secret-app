@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Widget "Countdown" — cuenta días hasta la próxima fecha importante.
+    Diseño horizontal:
+      [heart]  Título del evento       [ 15 ]
+               Fecha absoluta          días
+      ━━━━━━━━━━━━━━━━━━━━━━ (progress bar)
+
+    Resizable 1x3 → 4x2. `resizeMode="horizontal|vertical"`.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/widget_countdown_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_bg_countdown"
+    android:orientation="vertical"
+    android:padding="6dp">
+
+    <!-- Fila superior: heart + texto + días -->
+    <LinearLayout
+        android:id="@+id/widget_countdown_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <!-- Heart circle -->
+        <FrameLayout
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:background="@drawable/widget_heart_bg">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                android:src="@drawable/widget_ic_heart"
+                android:contentDescription="Countdown" />
+        </FrameLayout>
+
+        <!-- Título + fecha -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/widget_countdown_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="—"
+                android:textColor="#3D0602"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end"
+                tools:text="Aniversario" />
+
+            <TextView
+                android:id="@+id/widget_countdown_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#773125"
+                android:textSize="10sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                tools:text="15 Ago 2026" />
+        </LinearLayout>
+
+        <!-- Días grandes + label -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:orientation="vertical"
+            android:gravity="end">
+
+            <TextView
+                android:id="@+id/widget_countdown_days"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="#94483A"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:includeFontPadding="false"
+                tools:text="15" />
+
+            <TextView
+                android:id="@+id/widget_countdown_days_word"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="días"
+                android:textColor="#773125"
+                android:textSize="10sp"
+                android:includeFontPadding="false" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Progress bar hacia el destino -->
+    <ProgressBar
+        android:id="@+id/widget_countdown_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:layout_marginTop="6dp"
+        android:progressDrawable="@drawable/widget_countdown_progress"
+        android:max="100"
+        android:progress="0" />
+
+    <!-- Empty state -->
+    <LinearLayout
+        android:id="@+id/widget_countdown_empty_wrap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/widget_ic_clock"
+            android:contentDescription="Countdown"
+            android:alpha="0.6" />
+
+        <TextView
+            android:id="@+id/widget_countdown_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text=""
+            android:textColor="#87726F"
+            android:textSize="11sp" />
+    </LinearLayout>
+</LinearLayout>

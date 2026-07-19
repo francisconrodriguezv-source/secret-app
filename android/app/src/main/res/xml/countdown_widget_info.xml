@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Metadata del widget "Countdown" a la próxima fecha importante.
+    Layout 3x1 mínimo (1 celda vertical, 3 horizontal) → hasta 4x2.
+    `minHeight/minResizeHeight` reducidos a 40dp para forzar que quepa en
+    una sola fila del launcher (Samsung One UI tiende a redondear hacia
+    arriba si el contenido excede una celda).
+-->
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialLayout="@layout/widget_countdown"
+    android:minWidth="220dp"
+    android:minHeight="40dp"
+    android:minResizeWidth="180dp"
+    android:minResizeHeight="40dp"
+    android:targetCellWidth="3"
+    android:targetCellHeight="1"
+    android:updatePeriodMillis="3600000"
+    android:resizeMode="horizontal|vertical"
+    android:widgetCategory="home_screen"
+    android:previewLayout="@layout/widget_countdown"
+    android:description="@string/widget_countdown_desc" />

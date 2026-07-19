@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Fondo pill con gradient peach → lavender para el widget "Together".
+    Coincide con el `CozyColors.heroGradient` del design system Flutter.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:angle="135"
+        android:startColor="#FFDAD4"
+        android:endColor="#D7BEFF" />
+    <corners android:radius="28dp" />
+</shape>

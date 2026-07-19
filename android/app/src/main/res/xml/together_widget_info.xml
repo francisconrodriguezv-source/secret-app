@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Metadata del widget "Together". Se muestra en el picker del launcher.
+
+    Configurado como 1 fila de alto × 1..4 columnas de ancho, resizable en
+    ambos ejes para que el usuario pueda achicarlo a 1x1 aunque su
+    launcher (Samsung One UI, etc.) tienda a redondear a un mínimo mayor.
+    El layout se adapta al tamaño en runtime — ver
+    `TogetherWidgetProvider.onAppWidgetOptionsChanged`.
+-->
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialLayout="@layout/widget_together"
+    android:minWidth="40dp"
+    android:minHeight="40dp"
+    android:minResizeWidth="40dp"
+    android:minResizeHeight="40dp"
+    android:targetCellWidth="4"
+    android:targetCellHeight="1"
+    android:updatePeriodMillis="3600000"
+    android:resizeMode="horizontal|vertical"
+    android:widgetCategory="home_screen"
+    android:previewLayout="@layout/widget_together"
+    android:description="@string/widget_together_desc" />

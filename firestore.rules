@@ -1,0 +1,144 @@
+rules_version = '2';
+
+// ============================================================================
+// Tandem — Firestore Security Rules
+// ============================================================================
+//
+// Modelo de datos:
+//   users/{uid}                                     — perfil del usuario
+//   couples/{coupleId}                              — datos compartidos de la pareja
+//   couples/{coupleId}/members/{uid}                — 1 doc por miembro
+//   couples/{coupleId}/moments/{momentId}           — momentos (fotos + notas)
+//   couples/{coupleId}/notes/{noteId}               — sticky notes del message board
+//   couples/{coupleId}/events/{eventId}             — eventos del calendario
+//   couples/{coupleId}/milestones/{milestoneId}     — hitos del perfil
+//   invite_codes/{code6digitos}                     — código de emparejamiento
+//
+// Reglas globales:
+//   - Todo requiere estar autenticado.
+//   - Los datos del couple sólo son legibles/escribibles por sus miembros.
+//   - Cada usuario solo edita su propio doc en users/{uid}.
+//   - Los invite codes se pueden leer por cualquier autenticado (para
+//     validar) pero solo consumirlos una vez.
+// ============================================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------------- Helpers ----------------
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isSelf(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    function isMember(coupleId) {
+      return isSignedIn() &&
+        exists(/databases/$(database)/documents/couples/$(coupleId)/members/$(request.auth.uid));
+    }
+
+    // ---------------- users ----------------
+    match /users/{uid} {
+      // El usuario lee/escribe su propio doc; y también los miembros de
+      // su couple pueden LEER el doc del otro (para mostrar el nombre
+      // y avatar del partner).
+      allow read: if isSelf(uid) ||
+        (isSignedIn() &&
+          resource.data.coupleId != null &&
+          isMember(resource.data.coupleId));
+      allow create: if isSelf(uid);
+      allow update: if isSelf(uid);
+      allow delete: if false; // Nunca borrar users desde el cliente.
+    }
+
+    // ---------------- couples ----------------
+    match /couples/{coupleId} {
+      allow read: if isMember(coupleId);
+      allow create: if isSignedIn() &&
+        request.resource.data.createdBy == request.auth.uid;
+      allow update: if isMember(coupleId);
+      allow delete: if false; // Nunca borrar couples desde el cliente.
+
+      // ---------------- couples/members ----------------
+      match /members/{uid} {
+        // Miembros del couple leen la lista.
+        allow read: if isMember(coupleId);
+        // Alta: solo el propio usuario se agrega (via CoupleService en
+        // createCouple o joinCouple).
+        allow create: if isSelf(uid);
+        allow update: if false;
+        allow delete: if isSelf(uid); // solo se puede "salir" a sí mismo.
+      }
+
+      // ---------------- couples/moments ----------------
+      match /moments/{momentId} {
+        allow read: if isMember(coupleId);
+        allow create: if isMember(coupleId) &&
+          request.resource.data.authorId == request.auth.uid;
+        // El autor puede editar cualquier campo de su moment.
+        // Cualquier miembro puede editar SOLO `likedBy` (para dar like).
+        allow update: if isMember(coupleId) && (
+          resource.data.authorId == request.auth.uid ||
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likedBy'])
+        );
+        // Solo el autor borra su propio moment.
+        allow delete: if isMember(coupleId) &&
+          resource.data.authorId == request.auth.uid;
+      }
+
+      // ---------------- couples/notes ----------------
+      match /notes/{noteId} {
+        allow read: if isMember(coupleId);
+        allow create: if isMember(coupleId) &&
+          request.resource.data.authorId == request.auth.uid;
+        allow update, delete: if isMember(coupleId) &&
+          resource.data.authorId == request.auth.uid;
+      }
+
+      // ---------------- couples/events ----------------
+      match /events/{eventId} {
+        allow read: if isMember(coupleId);
+        // Los eventos los puede crear/editar/borrar cualquier miembro
+        // del couple (no importa quién los creó — son "compartidos").
+        allow write: if isMember(coupleId);
+      }
+
+      // ---------------- couples/milestones ----------------
+      match /milestones/{milestoneId} {
+        allow read: if isMember(coupleId);
+        allow write: if isMember(coupleId);
+      }
+
+      // ---------------- couples/pokes ----------------
+      // "Thinking of you": el cliente escribe un doc con su uid y nombre;
+      // una Cloud Function `onPokeCreated` envía FCM al otro miembro y
+      // borra el doc (nunca desde el cliente).
+      match /pokes/{pokeId} {
+        allow read: if isMember(coupleId);
+        allow create: if isMember(coupleId) &&
+          request.resource.data.fromUid == request.auth.uid;
+        allow update, delete: if false;
+      }
+    }
+
+    // ---------------- invite_codes ----------------
+    match /invite_codes/{code} {
+      // Cualquier autenticado puede leer para validar antes de unirse.
+      // El cliente NO ve más de un doc a la vez (busca por ID exacto).
+      allow read: if isSignedIn();
+      // Solo el creador del couple puede generar códigos que apunten a
+      // su propio couple.
+      allow create: if isSignedIn() &&
+        request.resource.data.consumedBy == null &&
+        isMember(request.resource.data.coupleId);
+      // Solo se puede "consumir" (setear consumedBy = uid propio). Ese
+      // update ocurre dentro de la transacción de joinCouple.
+      allow update: if isSignedIn() &&
+        resource.data.consumedBy == null &&
+        request.resource.data.consumedBy == request.auth.uid;
+      allow delete: if false;
+    }
+  }
+}

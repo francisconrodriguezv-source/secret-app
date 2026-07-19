@@ -1,30 +1,24 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
+// Smoke test aislado: verifica que el TopAppBar del design system se renderiza
+// correctamente y muestra el wordmark "Cozy Love". No monta el HomeShell
+// completo porque las Image.network no resuelven en el entorno de test.
 
+import 'package:cozy_love/theme/cozy_theme.dart';
+import 'package:cozy_love/widgets/cozy_top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:cozy_love/main.dart';
-
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
-
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+  testWidgets('CozyTopBar renders wordmark', (WidgetTester tester) async {
+    // avatarUrl vacío para forzar el placeholder local (sin llamadas de red).
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: CozyTheme.build(),
+        home: const Scaffold(appBar: CozyTopBar(avatarUrl: '')),
+      ),
+    );
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('Cozy Love'), findsOneWidget);
+    expect(find.byIcon(Icons.favorite), findsWidgets);
   });
 }

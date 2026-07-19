@@ -1,0 +1,9 @@
+# Compilado (lo genera `npm run build`).
+lib/
+
+# Dependencias.
+node_modules/
+
+# Firebase local emulator + logs.
+.firebase/
+firebase-debug.log

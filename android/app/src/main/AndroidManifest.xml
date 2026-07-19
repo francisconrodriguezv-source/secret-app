@@ -1,6 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Requerido para lanzar notificaciones locales en Android 13+. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Requerido para Firebase (Auth, Firestore, Storage, FCM). -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
-        android:label="cozy_love"
+        android:label="@string/app_name"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -25,6 +31,78 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <!-- FCM: canal por defecto para notificaciones cuando la app está
+             en background. Debe coincidir con el `channelId` que envían
+             las Cloud Functions y con el que crea NotificationBridge.kt. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="cozy_thinking" />
+
+        <!-- FileProvider para que la cámara pueda escribir a nuestro cache
+             y luego devolver el URI a la app. -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <!-- Home screen widget "Together" (contador de tiempo juntos). -->
+        <receiver
+            android:name=".TogetherWidgetProvider"
+            android:exported="true"
+            android:label="Tandem — Together">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/together_widget_info" />
+        </receiver>
+
+        <!-- Home screen widget "Upcoming" (próximos eventos). -->
+        <receiver
+            android:name=".UpcomingWidgetProvider"
+            android:exported="true"
+            android:label="Tandem — Upcoming">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/upcoming_widget_info" />
+        </receiver>
+
+        <!-- Home screen widget "Notes" (últimas notas). -->
+        <receiver
+            android:name=".NotesWidgetProvider"
+            android:exported="true"
+            android:label="Tandem — Notes">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/notes_widget_info" />
+        </receiver>
+
+        <!-- Home screen widget "Countdown" (cuenta regresiva). -->
+        <receiver
+            android:name=".CountdownWidgetProvider"
+            android:exported="true"
+            android:label="Tandem — Countdown">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/countdown_widget_info" />
+        </receiver>
+
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
@@ -40,6 +118,15 @@
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
+        </intent>
+        <!-- Necesario en Android 11+ para descubrir la cámara y el picker
+             de imágenes con Intent implícito. -->
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.OPEN_DOCUMENT" />
+            <data android:mimeType="image/*" />
         </intent>
     </queries>
 </manifest>

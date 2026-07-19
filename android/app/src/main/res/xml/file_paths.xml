@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- externalCacheDir del app: donde guardamos las fotos tomadas
+         con la cámara antes de mostrarlas / persistirlas. -->
+    <external-cache-path
+        name="cozy_camera"
+        path="." />
+    <cache-path
+        name="cozy_camera_internal"
+        path="." />
+</paths>
