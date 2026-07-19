@@ -12,7 +12,3 @@ GeneratedPluginRegistrant.java
 key.properties
 **/*.keystore
 **/*.jks
-
-# Firebase — el archivo de configuración de la app se descarga por
-# separado desde Firebase Console y NO debe subirse al repo.
-app/google-services.json

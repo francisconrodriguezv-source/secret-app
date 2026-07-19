@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "141019306694",
+    "project_id": "tandem-cb859",
+    "storage_bucket": "tandem-cb859.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:141019306694:android:be207a4c0b8d19947695c7",
+        "android_client_info": {
+          "package_name": "com.buds.cozy_love"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-hGmbKHV2PcbTpovF-hPvN8OFHutbCBA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
